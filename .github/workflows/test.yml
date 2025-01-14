@@ -5,8 +5,16 @@ on:
       - master
 
 jobs:
-  selftest:
+  selftest-without-install:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./
+  selftest-with-install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        with:
+          install: "--system -r requirements.test.txt"
+      - run: which ruff  # should be installed by requirements above
